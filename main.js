@@ -1,13 +1,15 @@
+// Timer configuration object with default values
 const timer = {
 	pomodoro: 25,
 	shortBreak: 5,
 	longBreak: 15,
 	longBreakInterval: 4,
 	sessions: 0,
-	remainingTime: {},
+	remainingTime: {}, // Placeholder for remaining time during a session.
 };
 let interval;
 
+// Initialize button sound and add click event listener to main button.
 const buttonSound = new Audio("button-sound.mp3");
 const mainButton = document.getElementById("js-btn");
 mainButton.addEventListener("click", () => {
@@ -20,9 +22,11 @@ mainButton.addEventListener("click", () => {
 	}
 });
 
+// Add click event listener to mode buttons container.
 const modeButtons = document.querySelector("#js-mode-buttons");
 modeButtons.addEventListener("click", handleMode);
 
+// Function to calculate remaining time based on the end time.
 function getRemainingTime(endTime) {
 	const currentTime = Date.parse(new Date());
 	const difference = endTime - currentTime;
@@ -38,6 +42,7 @@ function getRemainingTime(endTime) {
 	};
 }
 
+// Function to start the timer.
 function startTimer() {
 	let { total } = timer.remainingTime;
 	const endTime = Date.parse(new Date()) + total * 1000;
@@ -68,6 +73,7 @@ function startTimer() {
 					switchMode("pomodoro");
 			}
 
+			// Display a notification and play a sound at the end of a session.
 			if (Notification.permission === "granted") {
 				const text =
 					timer.mode === "pomodoro" ? "Get back to work!" : "Take a break!";
@@ -76,11 +82,13 @@ function startTimer() {
 
 			document.querySelector(`[data-sound"${timer.mode}"]`).play();
 
+			// Start the next session.
 			startTimer();
 		}
 	}, 1000);
 }
 
+// Function to stop the timer.
 function stopTimer() {
 	clearInterval(interval);
 
@@ -89,6 +97,7 @@ function stopTimer() {
 	mainButton.classList.remove("active");
 }
 
+// Function to update the clock display.
 function updateClock() {
 	const { remainingTime } = timer;
 	const minutes = `${remainingTime.minutes}`.padStart(2, "0");
@@ -107,6 +116,7 @@ function updateClock() {
 	progress.value = timer[timer.mode] * 60 - timer.remainingTime.total;
 }
 
+// Function to switch the timer mode.
 function switchMode(mode) {
 	timer.mode = mode;
 	timer.remainingTime = {
@@ -115,6 +125,7 @@ function switchMode(mode) {
 		seconds: 0,
 	};
 
+	// Update UI elements based on the selected mode.
 	document
 		.querySelectorAll("button[data-mode]")
 		.forEach((e) => e.classList.remove("active"));
@@ -127,6 +138,7 @@ function switchMode(mode) {
 	updateClock();
 }
 
+// Function to handle mode selection from mode buttons.
 function handleMode(event) {
 	const { mode } = event.target.dataset;
 
@@ -136,15 +148,16 @@ function handleMode(event) {
 	stopTimer();
 }
 
+// Event listener when the DOM is fully loaded.
 document.addEventListener("DOMContentLoaded", () => {
-	// Let's check if the browser supports notifications
+	// Check if the browser supports notifications.
 	if ("Notification" in window) {
-		// If notification permissions have neither been granted or denied
+		// If notification permissions have neither been granted nor denied.
 		if (
 			Notification.permission !== "granted" &&
 			Notification.permission !== "denied"
 		) {
-			// Ask the user for permission
+			// Ask the user for permission and show a notification if granted.
 			Notification.requestPermission().then(function (permission) {
 				// If permission is granted
 				if (permission === "granted") {
@@ -157,5 +170,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	}
 
+	// Initialize the timer with the default mode.
 	switchMode("pomodoro");
 });
