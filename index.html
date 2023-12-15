@@ -7,6 +7,46 @@
 		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body>
+		<main class="app">
+			<progress id="is-progress" value="0"></progress>
+			<div class="progress-bar"></div>
+			<div class="timer">
+				<div class="button-group mode-buttons" id="is-mode-buttons">
+					<button
+						class="button active mode-button"
+						id="is-pomodoro"
+						data-mode="pomodoro"
+					>
+						Pomodoro
+					</button>
+					<button
+						class="button mode-button"
+						id="is-short-break"
+						data-mode="shortBreak"
+					>
+						Short Break
+					</button>
+					<button
+						class="button mode-button"
+						id="is-long-break"
+						data-mode="longBreak"
+					>
+						Long Break
+					</button>
+				</div>
+				<div class="clock" id="is-clock">
+					<span id="is-minutes">25</span>
+					<span class="separator">:</span>
+					<span id="is-seconds">00</span>
+				</div>
+				<button class="main-button" id="is-btn" data-mode="start">Start</button>
+			</div>
+		</main>
+		<div class="hidden">
+			<audio src="./assets/backtowork.mp3" data-sound="pomodoro"></audio>
+			<audio src="./assets/break.mp3" data-sound="shortBreak"></audio>
+			<audio src="./assets/break.mp3" data-sound="longBreak"></audio>
+		</div>
 		<script src="main.js"></script>
 	</body>
 </html>
