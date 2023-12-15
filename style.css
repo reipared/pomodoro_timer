@@ -3,10 +3,8 @@
    ========================================================================== */
 
 /**
- *
- * Inheriting box sizing slightly better best-practice
- * https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
- *
+ * Box-sizing: border-box is inherited for better sizing consistency.
+ * Reference: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
  */
 
 html {
@@ -21,6 +19,9 @@ html {
   padding: 0;
 }
 
+/**
+ * Define custom color variables for easy modification and consistency.
+ */
 :root {
   --pomodoro: hsl(223, 25%, 40%);
   --shortBreak: hsl(48, 23%, 40%);
