@@ -4,6 +4,7 @@ const timer = {
 	longBreak: 15,
 	longBreakInterval: 4,
 	sessions: 0,
+	remainingTime: {},
 };
 let interval;
 
